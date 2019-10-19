@@ -2,20 +2,18 @@ package uk.tojourn.deserialisers
 
 import com.google.gson.Gson
 import uk.tojourn.FeedMeClient
-import uk.tojourn.data.EventBody
-import uk.tojourn.data.HeaderAndBody
-import uk.tojourn.data.Header
-import uk.tojourn.data.OutcomeBody
+import uk.tojourn.data.*
 import uk.tojourn.exceptions.DeserializationException
+import uk.tojourn.exceptions.TypeNotFoundException
 
 
 class FeedMeDeserializer() {
 
-    private val regex = Regex("(?<!\\|\\|)")
+    private val cleanStringRegex = Regex("(\\\\\\|)")
 
     fun extractHeaderAndBodyFromString(line: String): HeaderAndBody {
-        println(line)
-        val split = line.split(regex)
+        val cleanLine = line.replace(cleanStringRegex, "")
+        val split = cleanLine.split("|")
         try {
             val header = Header(split[1].toInt(), split[2], split[3], split[4].toLong())
             var body = split.drop(5)
@@ -30,17 +28,23 @@ class FeedMeDeserializer() {
 
     private fun createJsonBody(type: String, body: List<String>): Any {
         try {
-            val gson = Gson()
             return when (type) {
                 "event" -> EventBody(
                         body[0],
                         body[1],
                         body[2],
                         body[3],
-                        body[4].toInt(),
+                        body[4].toLong(),
                         body[5].toBoolean(),
                         body[6].toBoolean()
                     )
+                "market" -> MarketBody(
+                    body[0],
+                    body[1],
+                    body[2],
+                    body[3].toBoolean(),
+                    body[4].toBoolean()
+                )
                 "outcome" ->
                     OutcomeBody(
                         body[0],
@@ -50,11 +54,10 @@ class FeedMeDeserializer() {
                         body[4].toBoolean(),
                         body[5].toBoolean()
                     )
-
-                else -> "Didnt work"
+                else -> throw TypeNotFoundException("The type was not found was not known to the application")
             }
         } catch (e: Exception) {
-            FeedMeClient.logger.error("Service has performed a bail winton $e")
+            FeedMeClient.logger.error("The service experienced and error when trying to deserialize, Error: $e")
             throw DeserializationException("Cant convert to json")
         }
 
