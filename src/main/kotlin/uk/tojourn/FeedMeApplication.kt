@@ -1,8 +1,7 @@
 package uk.tojourn
 
-fun main(args: Array<String>) {
-    println("Hello, World")
+fun main() {
     val client = FeedMeClient()
-    client.start()
+    client.start("127.0.0.1", 8282)
 }
 
