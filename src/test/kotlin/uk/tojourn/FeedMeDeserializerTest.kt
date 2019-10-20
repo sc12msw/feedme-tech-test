@@ -85,7 +85,7 @@ class FeedMeDeserializerTest {
         "body not correct length, |1|create event|1234567891123|ffa75da5-a685-4b51-8fac-d2017e7ba96c|Skate Boarding StreetX Games|\\|P.J Ladd\\| vs \\|Eric Koston\\||1571565160773|0|1|"
     )
     fun `test when bad headers and event bodies are passed then the object creates a Deserialization exception`(labelOfTest: String, input: String) {
-        print("Testing: $labelOfTest")
+        print("Testing: $labelOfTest \n")
         assertFailsWith<DeserializationException> {
             testDeserializer.extractHeaderAndBodyFromString(input)
         }
@@ -94,11 +94,23 @@ class FeedMeDeserializerTest {
     @ParameterizedTest
     @CsvSource(
         "not correct length, |12|create|market|1234567891123|ffa75da5-a685-4b51-8fac-d2017e7ba96c|be657094-b010-4809-9a93-be03b8bb97f6 After Three Round Points Result|0|1|",
-        "displayed not known boolean, |12|create|market|1234567891123|ffa75da5-a685-4b51-8fac-d2017e7ba96c|be657094-b010-4809-9a93-be03b8bb97f6 After Three Round Points Result|test|1|",
-        "suspended not known boolean, |12|create|market|1234567891123|ffa75da5-a685-4b51-8fac-d2017e7ba96c|be657094-b010-4809-9a93-be03b8bb97f6 After Three Round Points Result|0|test|"
+        "displayed not known boolean, |12|create|market|1234567891123|ffa75da5-a685-4b51-8fac-d2017e7ba96c|be657094-b010-4809-9a93-be03b8bb97f6|After Three Round Points Result|test|1|",
+        "suspended not known boolean, |12|create|market|1234567891123|ffa75da5-a685-4b51-8fac-d2017e7ba96c|be657094-b010-4809-9a93-be03b8bb97f6|After Three Round Points Result|0|test|"
     )
     fun `test when bad markets bodies are passed then the object creates a Deserialization exception`(labelOfTest: String, input: String) {
-        print("Testing: $labelOfTest")
+        print("Testing: $labelOfTest \n")
+        assertFailsWith<DeserializationException> {
+            testDeserializer.extractHeaderAndBodyFromString(input)
+        }
+    }
+    @ParameterizedTest
+    @CsvSource(
+        "not correct length, |92|update|outcome|1234567891123|be657094-b010-4809-9a93-be03b8bb97f6 ae8e6f65-cc98-4b18-a994-ab6349950b86|\\|P.J Ladd\\||1/16|0|1|",
+        "displayed not known boolean, |92|update|outcome|1234567891123|be657094-b010-4809-9a93-be03b8bb97f6|ae8e6f65-cc98-4b18-a994-ab6349950b86|\\|P.J Ladd\\||1/16|test|1|",
+        "suspended not known boolean, |92|update|outcome|1234567891123|be657094-b010-4809-9a93-be03b8bb97f6|ae8e6f65-cc98-4b18-a994-ab6349950b86|\\|P.J Ladd\\||1/16|0|test|"
+    )
+    fun `test when bad outcome bodies are passed then the object creates a Deserialization exception`(labelOfTest: String, input: String) {
+        print("Testing: $labelOfTest \n")
         assertFailsWith<DeserializationException> {
             testDeserializer.extractHeaderAndBodyFromString(input)
         }
