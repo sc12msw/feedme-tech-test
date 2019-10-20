@@ -3,7 +3,14 @@ package uk.tojourn
 import org.junit.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import uk.tojourn.data.*
+import uk.tojourn.data.generic.Header
+import uk.tojourn.data.generic.HeaderAndBody
+import uk.tojourn.data.generic.outcome.Outcome
+import uk.tojourn.data.generic.outcome.OutcomeBody
+import uk.tojourn.data.simple.SimpleEvent
+import uk.tojourn.data.generic.event.EventBody
+import uk.tojourn.data.simple.SimpleMarket
+import uk.tojourn.data.generic.market.MarketBody
 import uk.tojourn.deserialisers.FeedMeDeserializer
 import uk.tojourn.exceptions.DeserializationException
 import kotlin.test.assertEquals
@@ -20,7 +27,7 @@ class FeedMeDeserializerTest {
     private val testDeserializer = FeedMeDeserializer()
 
     @Test
-    fun `test when a valid event from string is passed then method converts to correct object`() {
+    fun `test when a valid event from string is passed then method converts to correct object with empty markets`() {
         val expectedEventHeader = Header(1, "create", "event", 1234567891123)
         val expectedEventBody = EventBody(
             "ffa75da5-a685-4b51-8fac-d2017e7ba96c",
@@ -32,7 +39,7 @@ class FeedMeDeserializerTest {
             suspended = true
         )
         val expectedHeaderAndBody = HeaderAndBody(expectedEventHeader, expectedEventBody)
-        val expected = Event(expectedHeaderAndBody)
+        val expected = SimpleEvent(expectedHeaderAndBody)
         val result = testDeserializer.extractHeaderAndBodyFromString(validEvent)
         assertEquals(expected, result)
 
@@ -49,7 +56,7 @@ class FeedMeDeserializerTest {
             suspended = true
         )
         val expectedHeaderAndBody = HeaderAndBody(expectedEventHeader, expectedEventBody)
-        val expected = Market(expectedHeaderAndBody)
+        val expected = SimpleMarket(expectedHeaderAndBody)
         val result = testDeserializer.extractHeaderAndBodyFromString(validMarket)
         assertEquals(expected, result)
     }

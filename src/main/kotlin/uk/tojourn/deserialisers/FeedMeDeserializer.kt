@@ -1,7 +1,13 @@
 package uk.tojourn.deserialisers
 
 import uk.tojourn.FeedMeClient
-import uk.tojourn.data.*
+import uk.tojourn.data.generic.*
+import uk.tojourn.data.simple.SimpleEvent
+import uk.tojourn.data.generic.event.EventBody
+import uk.tojourn.data.generic.outcome.Outcome
+import uk.tojourn.data.generic.outcome.OutcomeBody
+import uk.tojourn.data.simple.SimpleMarket
+import uk.tojourn.data.generic.market.MarketBody
 import uk.tojourn.exceptions.CannotConvertStringToBooleanException
 import uk.tojourn.exceptions.DeserializationException
 import uk.tojourn.exceptions.TypeNotFoundException
@@ -33,7 +39,7 @@ class FeedMeDeserializer() {
 
         return when (header.type) {
             "event" ->
-                Event(
+                SimpleEvent(
                     HeaderAndBody(
                         header,
                         EventBody(
@@ -48,7 +54,7 @@ class FeedMeDeserializer() {
                     )
                 )
             "market" ->
-                Market(
+                SimpleMarket(
                     HeaderAndBody(
                         header,
                         MarketBody(

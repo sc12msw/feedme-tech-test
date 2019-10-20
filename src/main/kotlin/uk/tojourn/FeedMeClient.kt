@@ -34,13 +34,12 @@ class FeedMeClient {
         while (true) {
             val line = bufferedReader.readLine() ?: break
             // TODO remove print replace with functionality
-            print(line)
+            //print(line)
             val deserializer = FeedMeDeserializer()
             val dataObject = deserializer.extractHeaderAndBodyFromString(line)
             val gson = Gson()
             val jsonString = gson.toJson(dataObject)
-            // TODO remove print replace with functionality
-            print(jsonString)
+            print(jsonString + "\n")
         }
     }
 }
