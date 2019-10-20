@@ -8,4 +8,7 @@ data class Market(val market: HeaderAndBody): FeedMeDataType{
     override fun getType():String {
         return market.header.type
     }
+    override fun getMsgId(): Int {
+        return market.header.msgId
+    }
 }

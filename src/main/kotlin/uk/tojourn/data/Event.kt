@@ -7,4 +7,7 @@ data class Event(val event: HeaderAndBody) : FeedMeDataType {
     override fun getType():String {
         return event.header.type
     }
+    override fun getMsgId(): Int {
+        return event.header.msgId
+    }
 }

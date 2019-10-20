@@ -12,7 +12,10 @@ class FeedMeDeserializer() {
     private val cleanStringRegex = Regex("(\\\\\\|)")
 
     fun extractHeaderAndBodyFromString(line: String): FeedMeDataType {
-        val cleanLine = line.replace(cleanStringRegex, "")
+        // TODO use correct regex so you don't have to replace the escaped pipes with a different symbol
+        // This hack was due to me spending too much time on something simple would like some advice on the best way
+        // of extracting this data into an array or even a completely different method
+        val cleanLine = line.replace(cleanStringRegex, "*")
         val split = cleanLine.split("|")
         try {
             val header = Header(split[1].toInt(), split[2], split[3], split[4].toLong())

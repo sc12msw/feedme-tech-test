@@ -1,15 +1,12 @@
 package uk.tojourn
 
 import com.google.gson.Gson
-import kotlinx.coroutines.*
-import java.net.Socket
 import org.apache.logging.log4j.kotlin.Logging
-import uk.tojourn.data.*
 import uk.tojourn.deserialisers.FeedMeDeserializer
-import uk.tojourn.exceptions.TypeNotFoundException
-import java.io.InputStreamReader
 import java.io.BufferedReader
-import java.lang.Exception
+import java.io.FileWriter
+import java.io.InputStreamReader
+import java.net.Socket
 
 
 class FeedMeClient {
@@ -21,26 +18,37 @@ class FeedMeClient {
             val connection = Socket(host, port)
             logger.info("Connected to server at $host on port $port")
             val bufferedReader = BufferedReader(InputStreamReader(connection.getInputStream()))
-            readLinesFromBufferedReader(bufferedReader)
+            readLinesFromBufferedReaderAndWriteToJsonFile(bufferedReader)
+            connection.close()
         } catch (e: Exception) {
             logger.error("The server has caused an error: $e")
-        } finally {
             return true
         }
+        return false
     }
 
 
-    private fun readLinesFromBufferedReader(bufferedReader: BufferedReader) {
-        while (true) {
-            val line = bufferedReader.readLine() ?: break
-            // TODO remove print replace with functionality
-            print(line)
-            val deserializer = FeedMeDeserializer()
-            val dataObject = deserializer.extractHeaderAndBodyFromString(line)
-            val gson = Gson()
-            val jsonString = gson.toJson(dataObject)
-            // TODO remove print replace with functionality
-            print(jsonString)
+    private fun readLinesFromBufferedReaderAndWriteToJsonFile(bufferedReader: BufferedReader) {
+
+        logger.info("Writing out put to json file, this is just for task one proof will only write 100 objects to file")
+        var counter = 0
+        FileWriter("./output/output.json").use { file ->
+            file.write("{ \"taskOneOutputs\" : [")
+            while (counter < 100) {
+                val line = bufferedReader.readLine() ?: break
+                val deserializer = FeedMeDeserializer()
+                val dataObject = deserializer.extractHeaderAndBodyFromString(line)
+                val gson = Gson()
+                val jsonString = gson.toJson(dataObject)
+                val dataId = dataObject.getMsgId()
+                logger.info("Writing object to file with id: $dataId ")
+                file.write(jsonString)
+                counter++
+                if (counter < 100){
+                    file.write(",")
+                }
+            }
+            file.write("]}")
         }
     }
 }
