@@ -3,7 +3,7 @@ package uk.tojourn
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.apache.logging.log4j.kotlin.logger
-val logger = logger("uk.tojurn.FeedMeApplication")
+val logger = logger("uk.tojourn.FeedMeApplication")
 fun main(args: Array<String>) {
     if (args.size < 2) {
         println("Usage <ip or host> <port> e.g. 127.0.0.1 8282")

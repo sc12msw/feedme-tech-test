@@ -33,16 +33,13 @@ class FeedMeClient {
     private fun readLinesFromBufferedReader(bufferedReader: BufferedReader) {
         while (true) {
             val line = bufferedReader.readLine() ?: break
+            // TODO remove print replace with functionality
+            print(line)
             val deserializer = FeedMeDeserializer()
             val dataObject = deserializer.extractHeaderAndBodyFromString(line)
-            val eventObject: Any = when (dataObject.header.type) {
-                "event" -> Event(dataObject)
-                "market" -> Market(dataObject)
-                "outcome" -> Outcome(dataObject)
-                else -> throw TypeNotFoundException("Type received was not know to the application")
-            }
             val gson = Gson()
-            val jsonString = gson.toJson(eventObject)
+            val jsonString = gson.toJson(dataObject)
+            // TODO remove print replace with functionality
             print(jsonString)
         }
     }
