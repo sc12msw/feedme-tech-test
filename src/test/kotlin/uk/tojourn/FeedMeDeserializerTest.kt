@@ -26,7 +26,7 @@ class FeedMeDeserializerTest {
             "ffa75da5-a685-4b51-8fac-d2017e7ba96c",
             "Skate Boarding Street",
             "X Games",
-            "*P.J Ladd* vs *Eric Koston*",
+            "|P.J Ladd| vs |Eric Koston|",
             1571565160773,
             displayed = false,
             suspended = true
@@ -60,7 +60,7 @@ class FeedMeDeserializerTest {
         val expectedEventBody = OutcomeBody(
             "be657094-b010-4809-9a93-be03b8bb97f6",
             "ae8e6f65-cc98-4b18-a994-ab6349950b86",
-            "*P.J Ladd*",
+            "|P.J Ladd|",
             "1/16",
             displayed = false,
             suspended = true

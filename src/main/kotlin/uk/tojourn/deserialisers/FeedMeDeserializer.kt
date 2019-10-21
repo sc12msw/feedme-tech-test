@@ -17,16 +17,22 @@ class FeedMeDeserializer() {
         // of extracting this data into an array or even a completely different method
         val cleanLine = line.replace(cleanStringRegex, "*")
         val split = cleanLine.split("|")
+        val formattedList = split.map { it.replace("*", "|") }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         try {
-            val header = Header(split[1].toInt(), split[2], split[3], split[4].toLong())
-            var body = split.drop(5)
+            val header = Header(
+                formattedList[1].toInt(),
+                formattedList[2],
+                formattedList[3],
+                formattedList[4].toLong()
+            )
+            var body = formattedList.drop(5)
             body = body.dropLast(1)
             return createObjectType(header, body)
-        }catch (e: CannotConvertStringToBooleanException) {
+        } catch (e: CannotConvertStringToBooleanException) {
             FeedMeClient.logger.error("Deserialization error $e")
             throw DeserializationException("An error occurred during the deserialization process, when processing the boolean values")
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             FeedMeClient.logger.error("Deserialization error $e")
             throw DeserializationException("An error occurred during the deserialization process")
         }
