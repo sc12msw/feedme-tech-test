@@ -1,16 +1,17 @@
-package uk.tojourn.dbmanager
+package uk.tojourn
 
 import com.google.gson.Gson
 import com.mongodb.client.MongoCollection
 import io.mockk.*
 import org.bson.Document
-import org.junit.jupiter.api.Test
+import org.junit.Test
 import uk.tojourn.data.event.EventBody
 import uk.tojourn.data.market.MarketBody
 import uk.tojourn.data.outcome.OutcomeBody
 
 import uk.tojourn.data.hierarchical.Event
 import uk.tojourn.data.hierarchical.Market
+import uk.tojourn.dbmanager.FeedMeDBManager
 import kotlin.test.assertTrue
 
 class FeedMeDBManagerTest {
