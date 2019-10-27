@@ -1,7 +1,8 @@
-package uk.tojourn
+package uk.tojourn.client
 
 import com.google.gson.Gson
 import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringSerializer
 import java.net.Socket
@@ -13,12 +14,14 @@ import java.lang.Exception
 import java.util.*
 
 
-class FeedMeClient {
+class FeedMeProducerClient {
 
     companion object : Logging
 
+    //TODO Pass this as config
     private val topic = "dev.betting"
 
+    //TODO pass args as config
     fun start(providerHost: String, providerPort: Int, kafkaHost: String, kafkaPort: Int): Boolean {
         try {
             val providerConnection = Socket(providerHost, providerPort)
@@ -34,7 +37,7 @@ class FeedMeClient {
         }
     }
 
-    private fun deserializeMessageAndAddToQueue(bufferedReader: BufferedReader, producer: KafkaProducer<String,String>) {
+    private fun deserializeMessageAndAddToQueue(bufferedReader: BufferedReader, producer: Producer<String,String>) {
         while (true) {
             val line = bufferedReader.readLine() ?: break
             val deserializer = FeedMeDeserializer()
@@ -45,7 +48,7 @@ class FeedMeClient {
         }
     }
 
-    private fun createProducer(brokers: String): KafkaProducer<String, String> {
+    private fun createProducer(brokers: String): Producer<String, String> {
         val props = Properties()
         props["bootstrap.servers"] = brokers
         props["key.serializer"] = StringSerializer::class.java

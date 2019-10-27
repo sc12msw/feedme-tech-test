@@ -39,6 +39,9 @@ services:
         - "8181:8181"
         - "8282:8282"
 
-  feedme-client:
-    image: feedme-client:task1
+  feedme-producer:
+    image: feedme-producer:dev
+
+  feedme-consumer:
+    image: feedme-consumer:dev
 

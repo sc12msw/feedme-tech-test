@@ -1,3 +1,4 @@
 mvn clean package
-docker build -t feedme-client:task1 .
-docker-compose up --abort-on-container-exit
+docker build -f feedme-producer/Dockerfile -t feedme-producer:dev .
+docker build -f feedme-consumer/Dockerfile -t feedme-consumer:dev .
+docker-compose up -d

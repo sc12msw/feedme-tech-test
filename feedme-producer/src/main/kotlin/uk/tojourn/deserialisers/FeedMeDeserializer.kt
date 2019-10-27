@@ -1,6 +1,6 @@
 package uk.tojourn.deserialisers
 
-import uk.tojourn.FeedMeClient
+import uk.tojourn.client.FeedMeProducerClient
 import uk.tojourn.data.generic.*
 import uk.tojourn.data.simple.SimpleEvent
 import uk.tojourn.data.generic.event.EventBody
@@ -36,10 +36,10 @@ class FeedMeDeserializer() {
             body = body.dropLast(1)
             return createObjectType(header, body)
         } catch (e: CannotConvertStringToBooleanException) {
-            FeedMeClient.logger.error("Deserialization error $e")
+            FeedMeProducerClient.logger.error("Deserialization error $e")
             throw DeserializationException("An error occurred during the deserialization process, when processing the boolean values")
         } catch (e: Exception) {
-            FeedMeClient.logger.error("Deserialization error $e")
+            FeedMeProducerClient.logger.error("Deserialization error $e")
             throw DeserializationException("An error occurred during the deserialization process")
         }
     }

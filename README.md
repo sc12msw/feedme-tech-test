@@ -10,12 +10,17 @@
 ## How to run
 This project has been built using the git flow branching strategy each task will be in a separate feature then "released" to master.
 Depending on how far I get there should be a pattern ```feature/task<number>```. If you check out to that branch and run below it should work and you can see my process of thinking.
+### To start
 ```
 chmod +x buld_app.sh
 ./build_app.sh
 ```
+### To stop
+```docker-compose down```
 ### Final solution
-TBC
+To view the logging please use as the docker compose currently runs detached as the output with all services is not very readable for humans.
+```docker-compose logs <name of your service that was defined in docker-compose file>```
+
 ### Basic Solution
 The basic solution was to deserialize the stream into json. To make sure I don't fill your space up the app will only take the first 100 objects and save them to a json file.
 This should also be small enough to run through a simple json validator.
