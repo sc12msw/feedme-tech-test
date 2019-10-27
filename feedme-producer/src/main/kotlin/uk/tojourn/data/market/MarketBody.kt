@@ -1,4 +1,4 @@
-package uk.tojourn.data.generic.market
+package uk.tojourn.data.market
 
 data class MarketBody (val eventId: String,
                        val marketId: String,

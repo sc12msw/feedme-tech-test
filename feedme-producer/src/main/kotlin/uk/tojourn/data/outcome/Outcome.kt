@@ -1,7 +1,7 @@
-package uk.tojourn.data.generic.outcome
+package uk.tojourn.data.outcome
 
-import uk.tojourn.data.generic.FeedMeDataType
-import uk.tojourn.data.generic.HeaderAndBody
+import uk.tojourn.data.FeedMeDataType
+import uk.tojourn.data.HeaderAndBody
 
 data class Outcome(val outcome: HeaderAndBody): FeedMeDataType {
     override fun getOperation(): String {

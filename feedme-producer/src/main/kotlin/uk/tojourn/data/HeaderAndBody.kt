@@ -1,3 +1,3 @@
-package uk.tojourn.data.generic
+package uk.tojourn.data
 
 data class HeaderAndBody (val header: Header, val body: Any)

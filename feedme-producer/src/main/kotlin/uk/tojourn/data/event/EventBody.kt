@@ -1,4 +1,4 @@
-package uk.tojourn.data.generic.event
+package uk.tojourn.data.event
 
 data class EventBody(val eventId: String,
                      val category: String,

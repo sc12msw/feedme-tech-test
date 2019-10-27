@@ -3,14 +3,11 @@ package uk.tojourn
 import org.junit.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import uk.tojourn.data.generic.Header
-import uk.tojourn.data.generic.HeaderAndBody
-import uk.tojourn.data.generic.outcome.Outcome
-import uk.tojourn.data.generic.outcome.OutcomeBody
-import uk.tojourn.data.simple.SimpleEvent
-import uk.tojourn.data.generic.event.EventBody
-import uk.tojourn.data.simple.SimpleMarket
-import uk.tojourn.data.generic.market.MarketBody
+import uk.tojourn.data.Header
+import uk.tojourn.data.HeaderAndBody
+import uk.tojourn.data.outcome.OutcomeBody
+import uk.tojourn.data.event.EventBody
+import uk.tojourn.data.market.MarketBody
 import uk.tojourn.deserialisers.FeedMeDeserializer
 import uk.tojourn.exceptions.DeserializationException
 import kotlin.test.assertEquals
@@ -39,9 +36,8 @@ class FeedMeDeserializerTest {
             suspended = true
         )
         val expectedHeaderAndBody = HeaderAndBody(expectedEventHeader, expectedEventBody)
-        val expected = SimpleEvent(expectedHeaderAndBody)
         val result = testDeserializer.extractHeaderAndBodyFromString(validEvent)
-        assertEquals(expected, result)
+        assertEquals(expectedHeaderAndBody, result)
 
     }
 
@@ -56,9 +52,8 @@ class FeedMeDeserializerTest {
             suspended = true
         )
         val expectedHeaderAndBody = HeaderAndBody(expectedEventHeader, expectedEventBody)
-        val expected = SimpleMarket(expectedHeaderAndBody)
         val result = testDeserializer.extractHeaderAndBodyFromString(validMarket)
-        assertEquals(expected, result)
+        assertEquals(expectedHeaderAndBody, result)
     }
 
     @Test
@@ -73,9 +68,8 @@ class FeedMeDeserializerTest {
             suspended = true
         )
         val expectedHeaderAndBody = HeaderAndBody(expectedEventHeader, expectedEventBody)
-        val expected = Outcome(expectedHeaderAndBody)
         val result = testDeserializer.extractHeaderAndBodyFromString(validOutcome)
-        assertEquals(expected, result)
+        assertEquals(expectedHeaderAndBody, result)
     }
 
     @ParameterizedTest

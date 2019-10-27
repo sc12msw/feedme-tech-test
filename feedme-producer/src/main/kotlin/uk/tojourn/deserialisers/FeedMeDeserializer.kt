@@ -1,13 +1,11 @@
 package uk.tojourn.deserialisers
 
 import uk.tojourn.client.FeedMeProducerClient
-import uk.tojourn.data.generic.*
-import uk.tojourn.data.simple.SimpleEvent
-import uk.tojourn.data.generic.event.EventBody
-import uk.tojourn.data.generic.outcome.Outcome
-import uk.tojourn.data.generic.outcome.OutcomeBody
-import uk.tojourn.data.simple.SimpleMarket
-import uk.tojourn.data.generic.market.MarketBody
+import uk.tojourn.data.Header
+import uk.tojourn.data.HeaderAndBody
+import uk.tojourn.data.event.EventBody
+import uk.tojourn.data.market.MarketBody
+import uk.tojourn.data.outcome.OutcomeBody
 import uk.tojourn.exceptions.CannotConvertStringToBooleanException
 import uk.tojourn.exceptions.DeserializationException
 import uk.tojourn.exceptions.TypeNotFoundException
@@ -17,7 +15,7 @@ class FeedMeDeserializer() {
 
     private val cleanStringRegex = Regex("(\\\\\\|)")
 
-    fun extractHeaderAndBodyFromString(line: String): FeedMeDataType {
+    fun extractHeaderAndBodyFromString(line: String): HeaderAndBody {
         // TODO use correct regex so you don't have to replace the escaped pipes with a different symbol
         // This hack was due to me spending too much time on something simple would like some advice on the best way
         // of extracting this data into an array or even a completely different method
@@ -44,49 +42,43 @@ class FeedMeDeserializer() {
         }
     }
 
-    private fun createObjectType(header: Header, body: List<String>): FeedMeDataType {
+    private fun createObjectType(header: Header, body: List<String>): HeaderAndBody {
 
         return when (header.type) {
             "event" ->
-                SimpleEvent(
-                    HeaderAndBody(
-                        header,
-                        EventBody(
-                            body[0],
-                            body[1],
-                            body[2],
-                            body[3],
-                            body[4].toLong(),
-                            stringToBoolean(body[5]),
-                            stringToBoolean(body[6])
-                        )
+                HeaderAndBody(
+                    header,
+                    EventBody(
+                        body[0],
+                        body[1],
+                        body[2],
+                        body[3],
+                        body[4].toLong(),
+                        stringToBoolean(body[5]),
+                        stringToBoolean(body[6])
                     )
                 )
             "market" ->
-                SimpleMarket(
-                    HeaderAndBody(
-                        header,
-                        MarketBody(
-                            body[0],
-                            body[1],
-                            body[2],
-                            stringToBoolean(body[3]),
-                            stringToBoolean(body[4])
-                        )
+                HeaderAndBody(
+                    header,
+                    MarketBody(
+                        body[0],
+                        body[1],
+                        body[2],
+                        stringToBoolean(body[3]),
+                        stringToBoolean(body[4])
                     )
                 )
             "outcome" ->
-                Outcome(
-                    HeaderAndBody(
-                        header,
-                        OutcomeBody(
-                            body[0],
-                            body[1],
-                            body[2],
-                            body[3],
-                            stringToBoolean(body[4]),
-                            stringToBoolean(body[5])
-                        )
+                HeaderAndBody(
+                    header,
+                    OutcomeBody(
+                        body[0],
+                        body[1],
+                        body[2],
+                        body[3],
+                        stringToBoolean(body[4]),
+                        stringToBoolean(body[5])
                     )
                 )
             else -> throw TypeNotFoundException("The type was not found was not known to the application")

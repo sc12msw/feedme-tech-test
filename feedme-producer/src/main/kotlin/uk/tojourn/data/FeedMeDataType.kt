@@ -1,4 +1,4 @@
-package uk.tojourn.data.generic
+package uk.tojourn.data
 
 interface FeedMeDataType{
     fun getType(): String

@@ -1,4 +1,4 @@
-package uk.tojourn.data.generic.outcome
+package uk.tojourn.data.outcome
 
 data class OutcomeBody (val marketId:String,
                         val outcomeId:String,
