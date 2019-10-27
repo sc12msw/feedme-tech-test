@@ -8,7 +8,7 @@ import uk.tojourn.client.FeedMeProducerClient
 import uk.tojourn.dimodules.FeedMeModule
 
 val logger = logger("uk.tojourn.FeedMeProducer")
-fun main(args: Array<String>) {
+fun main() {
     try {
         runBlocking {
             val injector = Guice.createInjector(FeedMeModule())
@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
         }
         logger.info("Application has finished being fed and is now full.")
     } catch (e: Exception) {
-        logger.fatal("Application failed to start check you command line arguments are correct and ports are integers")
+        logger.fatal("Application failed to start Error: $e")
     }
 }
 

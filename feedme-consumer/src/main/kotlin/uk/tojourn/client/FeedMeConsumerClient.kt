@@ -44,7 +44,7 @@ class FeedMeConsumerClient @Inject constructor(private val consumer: Consumer<St
                         //TODO implement more than just create event (create child markets and outcomes)
                         "create" -> createProcessingAndWriteToDB(feedmeObject)
                         //TODO implement update
-                        "update"-> logger.info("TODO This is where an update should happen")
+                        //"update"-> update = "TODO"
                     }
                 }catch (e: Exception){
                     logger.error("An error occurred when serialising to json. Error $e")

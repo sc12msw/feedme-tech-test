@@ -2,18 +2,13 @@ package uk.tojourn.client
 
 import com.google.gson.Gson
 import com.google.inject.Inject
-import org.apache.kafka.clients.consumer.Consumer
-import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
-import org.apache.kafka.common.serialization.StringSerializer
-import java.net.Socket
 import org.apache.logging.log4j.kotlin.Logging
 import uk.tojourn.deserialisers.FeedMeDeserializer
-import java.io.InputStreamReader
 import java.io.BufferedReader
-import java.lang.Exception
-import java.util.*
+import java.io.InputStreamReader
+import java.net.Socket
 
 
 class FeedMeProducerClient @Inject constructor(private val producer: Producer<String, String>, private val providerConnection: Socket){
@@ -42,6 +37,7 @@ class FeedMeProducerClient @Inject constructor(private val producer: Producer<St
             val gson = Gson()
             val jsonString = gson.toJson(dataObject)
             producer.send(ProducerRecord(topic, jsonString))
+            logger.info("Sent message ${dataObject.header.msgId} to kafka queue")
         }
     }
 
