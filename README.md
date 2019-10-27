@@ -36,7 +36,7 @@ To view the logging please use as the docker compose currently runs detached as 
 ```docker-compose logs <name of your service that was defined in docker-compose file>```
 ### To start
 ```
-chmod +x buld_app.sh
+chmod +x build_app.sh
 ./build_app.sh
 ```
 ### To stop
@@ -49,7 +49,7 @@ This should also be small enough to run through a simple json validator.
 The output file will be stored  in ```output/output.json``` it should be blank before you run the application. It is mounted to the docker container so no need to go into the container to find the result.
 ```
 git checkout feature/taskOne
-chmod +x buld_app.sh
+chmod +x build_app.sh
 ./build_app.sh
 ```
 
