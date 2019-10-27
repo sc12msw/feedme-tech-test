@@ -37,9 +37,11 @@ class FeedMeConsumerClient @Inject constructor(private val consumer: Consumer<St
         while(true) {
             consumer.subscribe(listOf(topic))
             val records = consumer.poll(1000)
+            logger.info("Pulling ${records.count()} from queue")
             for (item in records){
                 try {
                     val feedmeObject = gson.fromJson(item.value(), HeaderAndBody::class.java)
+                    logger.info("Processing message ${feedmeObject.header.msgId} ")
                     when (feedmeObject.header.operation) {
                         //TODO implement more than just create event (create child markets and outcomes)
                         "create" -> createProcessingAndWriteToDB(feedmeObject)
