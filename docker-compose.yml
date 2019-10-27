@@ -42,6 +42,6 @@ services:
   feedme-producer:
     image: feedme-producer:dev
 
-#  feedme-consumer:
-#    image: feedme-consumer:dev
+  feedme-consumer:
+    image: feedme-consumer:dev
 
