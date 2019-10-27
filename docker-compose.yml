@@ -41,5 +41,4 @@ services:
 
   feedme-client:
     image: feedme-client:task1
-    volumes:
-      -  ${PWD}/output:/app/output
+
