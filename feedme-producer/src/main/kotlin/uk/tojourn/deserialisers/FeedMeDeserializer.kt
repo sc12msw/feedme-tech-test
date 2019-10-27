@@ -98,10 +98,6 @@ class FeedMeDeserializer() {
         return when (string.toLowerCase()) {
             "1" -> true
             "0" -> false
-            "true" -> true
-            "false" -> false
-            "t" -> true
-            "f" -> false
             else -> throw CannotConvertStringToBooleanException("This string \"$string\" could not be converted to a boolean")
         }
     }
