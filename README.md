@@ -3,7 +3,7 @@
 ## Technology Choices
 * Kotlin - I haven't had much experience with Kotlin but really want to learn it, I thought this is a good opportunity to learn some new skills and improve my kotlin
 * Maven - I used maven as my build runner tool as I have the most experience with it and started off with the Kotlin Maven Archetype.
-* JUnit5 - I used JUnit4 for my example unit tests. I also used parameterised unit tests using junit-jupiter-params.
+* JUnit4 - I used JUnit4 for my example unit tests. I also used parameterised unit tests using junit-jupiter-params.
 * Gson - For Json serialisation of the objects because I have used it previously and familiar with it.
 * Git-flow - Version control branching strategy, I find it useful releasing working parts of the application in increments and git flow is great to do this (I won't be following it totally as I will not delete the feature branches so you can see my process)
 * Kafka Queues - Never used them before wanted to learn how it works. Was a lot of fun setting all these components up with docker-compose!
